@@ -1,0 +1,37 @@
+input_data_path: "data/raw/heart_cleveland_upload.csv"
+output_model: "ml_project/models/model.joblib"
+output_validation: "ml_project/data/x_validation.csv"
+output_prediction: "ml_project/models/prediction.csv"
+output_metric_path: "ml_project/models/metrics.json"
+splitting_params:
+  val_size: 0.2
+  random_state: 42
+train_params:
+  model_type: 'RandomForestClassifier'
+  model_params:
+   RandomForestClassifier:
+     random_state: 42
+     forest_max_depth: 3
+     n_estimators: 100
+     min_samples_leaf: 3
+   DecisionTreeClassifier:
+    random_state: 42
+    max_depth: 3
+    min_samples_leaf: 3
+feature_params:
+  numerical_features:
+    - 'age'
+    - 'sex'
+    - 'cp'
+    - 'trestbps'
+    - 'chol'
+    - 'fbs'
+    - 'restecg'
+    - 'thalach'
+    - 'exang'
+    - 'oldpeak'
+    - 'slope'
+    - 'ca'
+    - 'thal'
+    - 'condition'
+  target: 'condition'
