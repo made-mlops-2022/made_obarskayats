@@ -80,12 +80,12 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment: *airflow_environment
     command: scheduler
-
-  ml_base:
-    build:
-      context: images/airflow-ml-base
-    image: airflow-ml-base
-    restart: "no"
+#
+#  ml_base:
+#    build:
+#      context: images/airflow-ml-base
+#    image: airflow-ml-base
+#    restart: "no"
 
   daily_dataset:
     build:
