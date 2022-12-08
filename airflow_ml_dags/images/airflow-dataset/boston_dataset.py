@@ -1,22 +1,14 @@
 import os
+import click
 import pathlib
-import datetime
 import numpy as np
 import pandas as pd
-from airflow import DAG
-from airflow.operators.python import PythonOperator
 from sklearn.datasets import load_boston
 
-default_args={
-    'owner': 'airflow',
-    'start_date': datetime.datetime(2022, 12, 4),
-    'email': ['youremail@gmail.com'],
-    'email_on_failure': True,
-    'retries':1,
-    'retries_delay':datetime.timedelta(minutes=5),
-}
 
-def _get_boston_dataset(dataset_dir: str):
+@click.command()
+@click.option("--dataset_dir")
+def get_dataset(dataset_dir: str):
     boston = load_boston()
     df = pd.DataFrame(boston['data'], columns=boston['feature_names'])
     df['target'] = pd.DataFrame(boston['target'])
@@ -38,20 +30,5 @@ def _get_boston_dataset(dataset_dir: str):
     X_data.to_csv(x_output, index=False)
     y_data.to_csv(y_output, index=False)
 
-
-with DAG(
-        dag_id="01_generate_dataset",
-        default_args=default_args,
-        schedule_interval="@daily"
-) as dag:
-    get_boston_dataset = PythonOperator(
-        task_id='get_boston_dataset',
-        python_callable=_get_boston_dataset,
-        email_on_failure=True,
-        op_kwargs={
-            "dataset_dir": "/opt/airflow/data/raw/{{ ds }}",
-        }
-    )
-
-    get_boston_dataset
-
+if __name__ == '__main__':
+    get_dataset()

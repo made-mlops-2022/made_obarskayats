@@ -9,6 +9,14 @@ x-environment: &airflow_environment
   - AIRFLOW__CORE__STORE_SERIALIZED_DAGS=True
   - AIRFLOW__WEBSERVER__EXPOSE_CONFIG=True
   - AIRFLOW__CORE__FERNET_KEY=${FERNET_KEY}
+  - POSTGRES_HOST_AUTH_METHOD=trust
+  - AIRFLOW__SMTP__SMTP_HOST=smtp.gmail.com
+  - AIRFLOW__SMTP__SMTP_PORT=587
+  - AIRFLOW__SMTP__SMTP_USER=${GMAIL_USERNAME}
+  - AIRFLOW__SMTP__SMTP_PASSWORD=${GMAIL_PASSWORD}
+  - AIRFLOW_CONN_FS_DEFAULT=""
+  #- _PIP_ADDITIONAL_REQUIREMENTS=${_PIP_ADDITIONAL_REQUIREMENTS:-scikit-learn}
+
 
 
 x-airflow-image: &airflow_image apache/airflow:2.3.0-python3.8
@@ -20,6 +28,7 @@ services:
       - POSTGRES_USER=airflow
       - POSTGRES_PASSWORD=airflow
       - POSTGRES_DB=airflow
+      - POSTGRES_HOST_AUTH_METHOD=trust
     ports:
       - "5432:5432"
   init:
@@ -27,6 +36,7 @@ services:
       context: images/airflow-docker
       args:
         AIRFLOW_BASE_IMAGE: *airflow_image
+        POSTGRES_HOST_AUTH_METHOD: trust
     image: airflow-docker
     depends_on:
       - postgres
@@ -39,6 +49,7 @@ services:
       context: ./airflow_ml_dags/images/airflow-docker
       args:
         AIRFLOW_BASE_IMAGE: *airflow_image
+        POSTGRES_HOST_AUTH_METHOD: trust
     image: airflow-docker
 
     restart: always
@@ -56,6 +67,7 @@ services:
       context: images/airflow-docker
       args:
         AIRFLOW_BASE_IMAGE: *airflow_image
+        POSTGRES_HOST_AUTH_METHOD: trust
     image: airflow-docker
 
     restart: always
@@ -69,7 +81,20 @@ services:
     environment: *airflow_environment
     command: scheduler
 
+  ml_base:
+    build:
+      context: images/airflow-ml-base
+    image: airflow-ml-base
+    restart: "no"
+
+  daily_dataset:
+    build:
+      context: ../../lecture_5/airflow-examples/images/airflow-dataset
+    image: airflow-dataset
+    restart: "no"
+
 volumes:
   logs:
+
 
 
