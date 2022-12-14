@@ -1,9 +1,0 @@
-[2022-11-11 00:08:36,478][__main__][INFO] - Starting of a ml_project
-[2022-11-11 00:08:36,478][__main__][INFO] - Chosen model is RandomForestClassifier
-[2022-11-11 00:08:36,480][__main__][INFO] - Raw dataset shape is (297, 14)
-[2022-11-11 00:08:36,483][__main__][INFO] - Train dataset shape is (237, 13)
-[2022-11-11 00:08:36,483][__main__][INFO] - Validation dataset shape is (60, 13)
-[2022-11-11 00:08:36,483][__main__][INFO] - Starting of train process with model params {'random_state': 42, 'forest_max_depth': 3, 'n_estimators': 100, 'min_samples_leaf': 3}
-[2022-11-11 00:08:36,554][__main__][INFO] - Predictions of model RandomForestClassifier are written in ml_project/models/prediction.csv
-[2022-11-11 00:08:36,555][__main__][INFO] - Metrics file of model RandomForestClassifier is written in ml_project/models/metrics.json
-[2022-11-11 00:08:36,555][__main__][INFO] - Metrics of RandomForestClassifier are {'accuracy': 0.767, 'f1_score': 0.759}
