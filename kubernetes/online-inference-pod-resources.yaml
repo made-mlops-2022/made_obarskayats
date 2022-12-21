@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: online-inference-resources
+  labels:
+    app: online-inference
+spec:
+  containers:
+    - image: tibarska/model:v6
+      name: online-inference-resources
+      ports:
+        - containerPort: 8000
+      resources:
+        requests:
+          memory: "1Gi"
+          cpu: "250m"
+        limits:
+          memory: "1Gi"
+          cpu: "500m"
