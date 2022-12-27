@@ -6,4 +6,5 @@ outputs/
 2022-12-05/
 2022-12-04/
 __pycache__/
+.helmignore
 .idea

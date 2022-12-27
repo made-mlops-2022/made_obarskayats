@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: online-inference-pod
+  labels:
+    app: online-inference
+spec:
+  containers:
+    - image: tibarska/model:v6
+      name: online-inference
+      ports:
+        - containerPort: 8000

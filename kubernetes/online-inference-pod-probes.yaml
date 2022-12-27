@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: live-ready
+  labels:
+    app: online-inference
+spec:
+  containers:
+    - image: tibarska/model:v6
+      name: live-ready
+      args:
+        - /bin/sh
+        - -c
+        - sleep 20; touch /health; sleep 80; rm -f /health; sleep 300
+      ports:
+        - containerPort: 8000
+      resources:
+        requests:
+          memory: "1Gi"
+          cpu: "250m"
+        limits:
+          memory: "1Gi"
+          cpu: "500m"
+      livenessProbe:
+        exec:
+          command:
+            - cat
+            - /health
+        initialDelaySeconds: 15
+        periodSeconds: 5
+      readinessProbe:
+        exec:
+          command:
+          - cat
+          - /health
+        initialDelaySeconds: 15
+        periodSeconds: 5
+
